@@ -1,19 +1,11 @@
 Perl-Critic-Policy-ControlStructures-ProhibitWhileDiamondDefaultWithoutLocal is
-Copyright (C) 2015 by Dan Book
-Copyright (C) 2022 by Thomas R. Wyant, III
+Copyright (C) 2025 by Thomas R. Wyant, III
 
 DESCRIPTION
 
-This package contains a slightly-more-permissive version of Dan Book's
-Perl::Critic::Policy::Community::WhileDiamondDefaultAssignment, which
-prohibits all uses of C<< while (<>) { ... } >> and related
-constructions unless they explicitly assign the output to a variable.
-The problem with using the default is that these constructions do not
-localize the topic variable, resulting in leakage of data and possible
-spooky action at a distance.
-
-This version of the policy allows the use of the topic variable provided
-it is explicitly localized earlier in the same scope.
+This package contains a somewhat-slapdash attempt to detect cases where a
+'goto LABEL;' transfers control into a block. This is unsupported, deprecated,
+and will become fatal in Perl v5.44.
 
 Perl::Critic is a prerequisite for this package. It is the intent that
 the prerequisites of this package be those of Perl::Critic, so no extra
