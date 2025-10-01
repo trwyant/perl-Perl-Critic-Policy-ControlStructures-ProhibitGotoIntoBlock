@@ -1,0 +1,52 @@
+## name Null test
+## failures 0
+## cut
+
+say 'Hello, world!';
+
+## name Goto to same or outer scope is OK
+## failures 0
+## cut
+
+{
+    goto FOO;
+    FOO: ;
+}
+
+{
+    goto BAR;
+}
+BAR: ;
+
+goto BAZ;
+BAZ: ;
+
+## name Goto to inner scope is not OK
+## failures 1
+## cut
+
+goto FOO;
+{
+    FOO: ;
+}
+
+## name Goto to disjoint scope is not OK
+## failures 1
+## cut
+
+{
+    goto BAR;
+}
+
+{
+    BAR: ;
+}
+
+# Local Variables:
+#   mode: cperl
+#   cperl-indent-level: 4
+#   fill-column: 72
+#   indent-tabs-mode: nil
+#   c-indentation-style: bsd
+# End:
+# ex: set ts=8 sts=4 sw=4 tw=72 ft=perl expandtab shiftround :
