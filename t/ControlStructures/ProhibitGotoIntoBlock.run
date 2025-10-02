@@ -42,6 +42,63 @@ goto FOO;
     BAR: ;
 }
 
+## name Goto into inner or disjoing do {} is not OK
+## failures 2
+## cut
+
+goto FOO;
+do {
+    FOO: ;
+};
+
+{
+    goto BAR;
+}
+
+do {
+    BAR: ;
+};
+
+## name Goto into while() is not OK
+## failures 1
+## cut
+
+goto FOO;
+
+while ( ! $$ ) {    # Very probably false, but shouldn't be optimized out.
+    FOO: say 'plugh';
+}
+
+## name Goto into sub {} is not OK, though maybe different error
+## failures 1
+## cut
+
+goto FOO;
+
+sub bar {
+    say 'called';
+    FOO: say 'bar';
+    return;
+}
+
+## name Goto into for ( ... ) { ... } or foreach ( ... ) { ... } is not OK
+## failures 2
+## cut
+
+goto FOO;
+
+for ( 1 .. 3 ) {
+    say;
+    FOO: say 'foo';
+}
+
+goto BAR;
+
+foreach ( 4 .. 6 ) {
+    say;
+    BAR: say 'bar';
+}
+
 # Local Variables:
 #   mode: cperl
 #   cperl-indent-level: 4

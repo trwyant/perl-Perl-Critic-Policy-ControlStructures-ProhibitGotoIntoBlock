@@ -60,13 +60,36 @@ sub violates {
     # NOTE that its semantics change below here.
     $target = $target->content() . $COLON;
 
-
     foreach my $lbl_blk ( @{ $self->{_label}{$target} || [] } ) {
         foreach my $goto_blk ( _find_all_containing_blocks( $elem ) ) {
             $goto_blk == $lbl_blk
                 and return;
         }
     }
+
+    # FIXME I have found two cases where Perl v5.42 does not warn here.
+    # They are:
+    #
+    # if ( ... ) { ... FOO: ... } elsif ( ... ) { ... goto FOO; } ...
+    #    This was found in the wild in Image-ExifTool
+    #
+    # my $x; goto FOO; $x = do { say 'Boo!'; FOO: 1 } + 2;
+    #    That is, you can `goto ...` a block that forms the left-hand
+    #    side of a binary operator. This is actually documented as being
+    #    legal in `perldoc -f goto` for Perl v5.42. It is illegal (and I
+    #    think throws a fatal exception) if it's the right-hand side. No
+    #    idea about chained operators, and my personal opinion that
+    #    anyone who uses this construct should be chained to the
+    #    computer and forced to maintain this code as long as he or she
+    #    lives ... and after, if that can be arranged.
+    #
+    # OTOH the following cases which parse as a PPI::Structure::Block DO
+    # warn:
+    #   {; ... } -- a bare block
+    #   do { ... } -- though this is NOT a block for (e.g.) `last` etc
+    #   while ( ... ) { ... }
+    #   sub { ... } -- though this was a different error
+    #   for ( ... ) { ... }
 
     return $self->violation( $DESC, $EXPL, $elem);
 }
