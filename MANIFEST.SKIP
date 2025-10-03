@@ -72,7 +72,11 @@
 
 # Avoid various author cruft
 \bfoo/
+\bmeta/
 \bref/
 
 # Avoid archives of this distribution
 \bPerl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock-[\d\.\_]+
+
+# Avoit GitHub stuff
+^.github/

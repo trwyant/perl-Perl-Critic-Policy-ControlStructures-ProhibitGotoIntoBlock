@@ -20,7 +20,7 @@ sub new {
 }
 
 sub abstract {
-    return 'Critique diamond without assignment and no local $_';
+    return 'Do not enter a block via a goto.';
 }
 
 sub add_to_cleanup {
