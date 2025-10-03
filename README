@@ -1,4 +1,4 @@
-Perl-Critic-Policy-ControlStructures-ProhibitWhileDiamondDefaultWithoutLocal is
+Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock is
 Copyright (C) 2025 by Thomas R. Wyant, III
 
 DESCRIPTION
@@ -16,7 +16,7 @@ INSTALLATION
 This package is installable by either of the two usual incantations:
 
     tar -xzf \
-	Perl-Critic-Policy-ControlStructures-ProhibitWhileDiamondDefaultWithoutLocal-9.999.tar
+	Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock-9.999.tar
     perl Makefile.PL
     make
     make test
@@ -25,7 +25,7 @@ This package is installable by either of the two usual incantations:
 or
 
     tar -xzf \
-	Perl-Critic-Policy-ControlStructures-ProhibitWhileDiamondDefaultWithoutLocal-9.999.tar
+	Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock-9.999.tar
     perl Build.PL
     ./Build
     ./Build test
