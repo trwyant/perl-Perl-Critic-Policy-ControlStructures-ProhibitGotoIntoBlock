@@ -1,2 +1,10 @@
+0.000_002	2025-10-02	T. R. Wyant
+    Eliminate last vestiges of the policy I started from.
+
+    Comment on false positive found in Image-ExifTool and potential
+    false positive found in `perldoc -f goto`. Also comment on all the
+    cases I have found so far that DO warn, and add them to the .run
+    file.
+
 0.000_001	2025-10-01	T. R. Wyant
     Initial internal release.
