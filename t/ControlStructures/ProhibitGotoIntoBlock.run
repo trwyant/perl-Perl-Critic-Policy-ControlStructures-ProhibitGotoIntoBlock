@@ -99,6 +99,69 @@ foreach ( 4 .. 6 ) {
     BAR: say 'bar';
 }
 
+## name Goto into given ( ... ) { ... } is not OK
+## failures 1
+## cut
+
+goto UNIT;
+
+given ( $ARGV[0] ) {
+    when ( undef ) { say 'Undefined' }
+    when ( 0 ) { say 'Nil' }
+    when ( 1 ) { UNIT: say 'Unit' }
+    when ( 2 ) { say 'Pair' }
+    default { say "<'$_' is unknown>" }
+}
+
+__END__
+
+=head1 TITLE
+
+switch - <<< replace boiler plate >>>
+
+=head1 SYNOPSIS
+
+ switch
+ switch --help
+ switch --version
+
+=head1 OPTIONS
+
+<<< replace boiler plate >>>
+
+=head2 --help
+
+This option displays the documentation for this script. The script then
+exits.
+
+=head2 --version
+
+This option displays the version of this script. The script then exits.
+
+=head1 DETAILS
+
+<<< replace boiler plate >>>
+
+=head1 AUTHOR
+
+Thomas R. Wyant, III (wyant at cpan dot org)
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2025 by Thomas R. Wyant, III
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl 5.10.0. For more details, see the full text
+of the licenses in the directory LICENSES.
+
+This program is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
+
+=cut
+
+# ex: set textwidth=72 :
+
 # Local Variables:
 #   mode: cperl
 #   cperl-indent-level: 4
