@@ -113,6 +113,27 @@ given ( $ARGV[0] ) {
     default { say "<'$_' is unknown>" }
 }
 
+## name Goto into if ( ... ) { ... } elsif ( ... ) { ... } else { ... } not OK
+## failures 3
+## cut
+
+my $word = 'xyzzy';
+
+goto FOO;
+goto BAR;
+goto DFLT;
+
+if ( $word eq 'foo' ) {
+    FOO:
+    say 'Foo!';
+} elsif ( $word eq 'bar' ) {
+    BAR:
+    say 'Bar!';
+} else {
+    DFLT:
+    say "'$word'";
+}
+
 __END__
 
 =head1 TITLE

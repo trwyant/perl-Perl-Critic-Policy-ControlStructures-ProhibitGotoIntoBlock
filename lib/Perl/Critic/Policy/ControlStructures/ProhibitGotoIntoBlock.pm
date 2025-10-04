@@ -71,7 +71,11 @@ sub violates {
     # They are:
     #
     # if ( ... ) { ... FOO: ... } elsif ( ... ) { ... goto FOO; } ...
-    #    This was found in the wild in Image-ExifTool
+    #    This was found in the wild in Image-ExifTool. However, I am
+    #    unable to reproduce this. Investigation shows that the relevant
+    #    code is in fact tickled in at least one case
+    #    (lib/Image/ExifTool/Geotag.pm:), but that module does not
+    #    enable warnings. So this is a true positive.
     #
     # my $x; goto FOO; $x = do { say 'Boo!'; FOO: 1 } + 2;
     #    That is, you can `goto ...` a block that forms the left-hand
@@ -147,15 +151,6 @@ generate a false positive for such code. Frankly, just the thought of
 such code makes my skin crawl. I am reluctant to spend time to
 support it, and would rather use my time and effort advocating the
 replacement of such code with something more comprehensible.
-
-B<Note also> that Perl v5.42 is observed not to warn on a C<goto> into
-an C<if-elsif-else> construction. The current policy generates a false
-positive in this case. I believe that B<maybe> this case could be
-handled correctly, and a future version of this policy B<might> support
-its detection, guarded by a configuration variable. The possibility of
-support will improve if someone can demonstrate that this is supported
-Perl behavior, or convince me that the functionality is useful for
-research.
 
 =head1 AFFILIATION
 
