@@ -1,3 +1,15 @@
+0.000_003	2025-10-04	T. R. Wyant
+    Test for goto into if-elsif-else blocks. I originally thought that
+    these did not warn because a couple of the Image-Exif modules do
+    this, but the tests do not warn. The gotos are in fact executed, but
+    the relevant modules do not enable warnings.
+
+    Add test for given/when.
+
+    Document known false (?) positives and my intentions for them.
+
+    Add/correct various medatada and support documentation.
+
 0.000_002	2025-10-02	T. R. Wyant
     Eliminate last vestiges of the policy I started from.
 

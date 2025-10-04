@@ -7,7 +7,7 @@ use Perl::Critic::Utils qw{ :booleans :characters :severities :ppi };
 use base 'Perl::Critic::Policy';
 use Readonly;
 
-our $VERSION = '0.000_002';
+our $VERSION = '0.000_003';
 
 Readonly::Scalar my $DESC => 'Do not enter a block via a goto';
 Readonly::Scalar my $EXPL => 'Entering a block via a goto is unsupported, and will become a fatal error in Perl v5.44.';
