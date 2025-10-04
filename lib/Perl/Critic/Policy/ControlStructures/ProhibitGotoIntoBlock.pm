@@ -90,6 +90,7 @@ sub violates {
     #   while ( ... ) { ... }
     #   sub { ... } -- though this was a different error
     #   for ( ... ) { ... }
+    #   given ( ... ) { ... }
 
     return $self->violation( $DESC, $EXPL, $elem);
 }
@@ -139,6 +140,22 @@ Perl v5.44. Before that, the behavior is deprecated as of Perl v5.37.10,
 and will issue a warning as of that version. The problem is that if you
 enter a block via a C<goto>, any initialization of that block will not
 occur.
+
+B<Note> that C<perldoc -f goto> says that C<goto> may be used to jump
+into the B<first> parameter of a binary operator. This policy will
+generate a false positive for such code. Frankly, just the thought of
+such code makes my skin crawl. I am reluctant to spend time to
+support it, and would rather use my time and effort advocating the
+replacement of such code with something more comprehensible.
+
+B<Note also> that Perl v5.42 is observed not to warn on a C<goto> into
+an C<if-elsif-else> construction. The current policy generates a false
+positive in this case. I believe that B<maybe> this case could be
+handled correctly, and a future version of this policy B<might> support
+its detection, guarded by a configuration variable. The possibility of
+support will improve if someone can demonstrate that this is supported
+Perl behavior, or convince me that the functionality is useful for
+research.
 
 =head1 AFFILIATION
 
