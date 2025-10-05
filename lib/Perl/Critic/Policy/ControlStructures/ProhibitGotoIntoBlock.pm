@@ -86,6 +86,19 @@ sub violates {
     #    anyone who uses this construct should be chained to the
     #    computer and forced to maintain this code as long as he or she
     #    lives ... and after, if that can be arranged.
+    #    FIXME this appears to be a misunderstanding of `perldoc -f
+    #    goto`. Perl's t/op/goto.t appears to test for this, but the
+    #    tested code is
+    #
+    #    eval {
+    #        goto __GEN_2;
+    #        my $sent = do {
+    #            __GEN_2:
+    #        };
+    #    };
+    #    is $@,'', 'goto the first parameter of a binary expression [perl #132854]';
+    #
+    #    which still warns.
     #
     # OTOH the following cases which parse as a PPI::Structure::Block DO
     # warn:
@@ -131,7 +144,7 @@ sub _find_containing_block {
 
 __END__
 
-=for stopwords goto
+=for stopwords fatalized goto
 
 =head1 NAME
 
@@ -145,12 +158,13 @@ and will issue a warning as of that version. The problem is that if you
 enter a block via a C<goto>, any initialization of that block will not
 occur.
 
-B<Note> that C<perldoc -f goto> says that C<goto> may be used to jump
-into the B<first> parameter of a binary operator. This policy will
-generate a false positive for such code. Frankly, just the thought of
-such code makes my skin crawl. I am reluctant to spend time to
-support it, and would rather use my time and effort advocating the
-replacement of such code with something more comprehensible.
+The behavior of C<goto> in the presence of duplicate labels is
+undocumented, but Perl's F<t/op/goto.t> tests that the first duplicate
+in a given scope is the target of the goto, and when duplicates are in
+multiple scopes the preference is same scope, inner scope (which is to
+be fatalized, maybe) and outer scope. This policy makes no attempt to
+duplicate this exact logic. Instead it declares a violation if and only
+if the only possible targets for a F<goto> are in an inner scope.
 
 =head1 AFFILIATION
 
