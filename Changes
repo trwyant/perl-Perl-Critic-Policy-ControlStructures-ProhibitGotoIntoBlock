@@ -1,3 +1,9 @@
+0.000_004	2025-10-05	T. R. Wyant
+    Add test for goto into first (sic) operand of expression. This
+    duplicates what is in t/op/goto.t.
+
+    Update policy doc and comments for my current understanding of goto.
+
 0.000_003	2025-10-04	T. R. Wyant
     Test for goto into if-elsif-else blocks. I originally thought that
     these did not warn because a couple of the Image-Exif modules do
