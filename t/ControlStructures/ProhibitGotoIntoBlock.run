@@ -134,6 +134,21 @@ if ( $word eq 'foo' ) {
     say "'$word'";
 }
 
+## name Perl #132799 correctly classified
+## failures 0
+## cut
+
+# From t/op/goto.t
+# [perl #132799]
+# Erroneous inward goto warning, followed by crash.
+# The eval must be in an assignment.
+sub _routine {
+    my $e = eval {
+        goto L2;
+      L2:
+    }
+}
+
 __END__
 
 =head1 TITLE
