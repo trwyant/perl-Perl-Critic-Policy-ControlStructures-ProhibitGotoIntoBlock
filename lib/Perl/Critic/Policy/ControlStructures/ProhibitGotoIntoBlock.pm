@@ -226,7 +226,7 @@ Thomas R. Wyant, III (F<wyant at cpan dot org>)
 
 =head1 COPYRIGHT
 
-Copyright 2025, Thomas R. Wyant, III
+Copyright 2025-2026 Thomas R. Wyant, III
 
 =head1 LICENSE
 
