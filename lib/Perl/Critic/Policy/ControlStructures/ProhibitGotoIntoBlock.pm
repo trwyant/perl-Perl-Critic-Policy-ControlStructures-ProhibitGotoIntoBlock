@@ -12,6 +12,7 @@ our $VERSION = '0.000_004';
 Readonly::Scalar my $DESC => 'Do not enter a block via a goto';
 Readonly::Scalar my $EXPL => 'Entering a block via a goto is unsupported, and will become a fatal error in Perl v5.44.';
 
+Readonly::Scalar my $DO => 'do';
 Readonly::Scalar my $GOTO => 'goto';
 
 #-----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ sub prepare_to_scan_document {
 sub violates {
     my ( $self, $elem ) = @_;
 
-    my ( $goto, $target ) = $elem->schildren();
+    my ( $goto, $target, $subseq ) = $elem->schildren();
 
     # Unless it's a goto, ignore it.
     $goto
@@ -57,10 +58,40 @@ sub violates {
 
     # Stringify the target, and append a colon since the
     # PPI::Token::Label includes it.
-    # NOTE that its semantics change below here.
+    # NOTE that the semantics of $target change below here.
     $target = $target->content() . $COLON;
 
-    foreach my $lbl_blk ( @{ $self->{_label}{$target} || [] } ) {
+    # If we have found 'do { ... }', ignore it.
+    $target eq $DO
+        and $subseq
+        and $subseq->isa( 'PPI::Structure::Block' )
+        and return;
+
+    # If we have found 'subroutine()', ignore it. This is pure paranoia
+    # since 'goto subroutine()' is a syntax error, at least in Perl
+    # v5.42.0.
+    $subseq
+        and $subseq ->isa( 'PPI::Structure::List' )
+        and return;
+
+    # If the target of the 'goto' does not exist, it's not the error
+    # we're looking for. Move along. Move along.
+    $self->{_label}{$target}
+        or return;
+
+    # At this point we can be pretty sure we have a 'goto LABEL;'. If we
+    # can find an appropriate resolution for the label, we're fine.
+    # FIXME All I think this does is find a target label in the correct
+    # scope. The actual search order as of Perl v5.42.0, as tested for
+    # in Perl's t/op/goto.t is current scope of the 'goto', inner scope,
+    # outer scope. I don't know where disjoint scopes come in this, but
+    # if one is jumped into the deprecation order is triggered.
+    # FIXME labels in subroutines are not visible outside of them -- at
+    # least in Perl v5.42.0, though I have not yet found this in Perl's
+    # t/op/goto.t. This is not a problem (I think) with the current
+    # algorithm, but it will be if I start considering disjoint blocks
+    # separately.
+    foreach my $lbl_blk ( @{ $self->{_label}{$target} } ) {
         foreach my $goto_blk ( _find_all_containing_blocks( $elem ) ) {
             $goto_blk == $lbl_blk
                 and return;
@@ -78,12 +109,12 @@ sub violates {
     #    enable warnings. So this is a true positive.
     #
     # my $x; goto FOO; $x = do { say 'Boo!'; FOO: 1 } + 2;
-    #    That is, you can `goto ...` a block that forms the left-hand
-    #    side of a binary operator. This is actually documented as being
-    #    legal in `perldoc -f goto` for Perl v5.42. It is illegal (and I
-    #    think throws a fatal exception) if it's the right-hand side. No
-    #    idea about chained operators, and my personal opinion that
-    #    anyone who uses this construct should be chained to the
+    #    That is, you can `goto ...` a block that forms the right-hand
+    #    side of a binary expression. This is actually documented as
+    #    being legal in `perldoc -f goto` for Perl v5.42. It is illegal
+    #    (and I think throws a fatal exception) if it's the right-hand
+    #    side. No idea about chained operators, and my personal opinion
+    #    that anyone who uses this construct should be chained to the
     #    computer and forced to maintain this code as long as he or she
     #    lives ... and after, if that can be arranged.
     #    FIXME this appears to be a misunderstanding of `perldoc -f

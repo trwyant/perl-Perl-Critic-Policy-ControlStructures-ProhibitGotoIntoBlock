@@ -149,6 +149,37 @@ sub _routine {
     }
 }
 
+## name Goto do { ... } ignored
+## failures 0
+## cut
+
+goto do { foo() };
+
+## name Goto do; is not ignored
+## failures 1
+## cut
+
+goto do;
+{ do: }
+
+## name Goto subroutine() ignored
+## failures 0
+## cut
+
+# NOTE that in Perl v5.42.0 'goto subroutine();' is a syntax error, so
+# the functionality this tests is pure paranoia. NOTE also that this is
+# not the same as 'goto &subroutine' unless subroutine() actually
+# returns a code reference.
+
+goto subroutine();
+
+## name Goto non-existent label is ignored
+## failures 0
+## cut
+
+goto FUBAR;
+BAZ:    # Policy disables itself if no labels at all.
+
 __END__
 
 =head1 TITLE
