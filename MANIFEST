@@ -5,8 +5,8 @@ examples/goto-into-block
 inc/My/Module/Build.pm
 inc/My/Module/Meta.pm
 lib/Perl/Critic/Policy/ControlStructures/ProhibitGotoIntoBlock.pm
-LICENSES/Artistic
-LICENSES/Copying
+LICENSE-Artistic
+LICENSE-GPL
 Makefile.PL
 MANIFEST
 META.json
