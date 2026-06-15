@@ -54,7 +54,6 @@ sub dist_name {
     return 'Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock';
 }
 
-
 sub license {
     return 'artistic_2';
 }
@@ -68,7 +67,7 @@ sub meta_merge {
 	dynamic_config	=> 1,
 	resources	=> {
 	    bugtracker	=> {
-#		web	=> 'https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock',
+#		web	=> 'https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues',
 		web	=> 'https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues',
 		mailto  => 'harryfmudd@comcast.net',
 	    },
@@ -82,7 +81,6 @@ sub meta_merge {
 	@extra,
     };
 }
-
 
 sub module_name {
     return 'Perl::Critic::Policy::ControlStructures::ProhibitGotoIntoBlock';
@@ -253,8 +251,7 @@ This subroutine returns the version of Perl required by the module.
 =head1 SUPPORT
 
 Support is by the author. Please file bug reports at
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock>,
-L<https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues>, or in
+L<https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues> or in
 electronic mail to the author.
 
 =head1 AUTHOR

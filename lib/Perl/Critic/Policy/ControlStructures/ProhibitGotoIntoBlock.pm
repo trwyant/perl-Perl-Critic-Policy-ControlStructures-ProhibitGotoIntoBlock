@@ -213,10 +213,9 @@ by Dan Book, C<dbook@cpan.org>
 
 =head1 SUPPORT
 
-Support is by the current author. Please file bug reports at
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock>,
-L<https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues>, or in
-electronic mail to F<harryfmudd at comcast dot net>.
+Support is by the author. Please file bug reports at
+L<https://github.com/trwyant/perl-Perl-Critic-Policy-ControlStructures-ProhibitGotoIntoBlock/issues> or in
+electronic mail to the author.
 
 =head1 AUTHOR
 
