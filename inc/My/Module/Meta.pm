@@ -142,6 +142,8 @@ sub provides {
     return ( provides => $provides );
 }
 
+sub release_status { 'unstable' }
+
 sub requires {
     my ( undef, @args ) = @_;
     return {
@@ -230,6 +232,11 @@ C<resources> data.
 
 This subroutine returns an array of the names and versions of
 recommended modules.
+
+=head2 release_status
+
+This returns the L<CPAN::Meta::Spec|CPAN::Meta::Spec> release status for
+the distribution.
 
 =head2 requires
 
